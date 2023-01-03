@@ -19,7 +19,7 @@ public class Test_Ex2_1 {
         int seed = (int) System.currentTimeMillis();//seed
         int bound = 100000;//max number of lines
         String[] file_names = Ex2_1.createTextFiles(number_of_files,seed,bound);//generating the files
-        //System.out.println(Arrays.toString(file_names));//printing the names of files (output of function 1)
+        System.out.println(Arrays.toString(file_names));//printing the names of files (output of function 1)
         System.out.println("-----------------------------------------------------------");
 
         
