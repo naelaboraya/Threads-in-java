@@ -43,6 +43,11 @@ The main method in the Ex2_1 class demonstrates how to use the three methods for
 
  * The NumOfLinesThreadPool class is an inner class that implements the Callable interface and is used in the third method for counting the lines.
 
+## UML Diagram for part I
+
+![UML_Ex2_1](https://user-images.githubusercontent.com/94143804/210369991-1ba8c858-9d73-418b-9b67-c15d0e44f784.png)
+
+
 ### Tests & Results
 
 We have tested the functions with different number of files and different values of "seed" and "bound"  to generate a different random number in each test , 
