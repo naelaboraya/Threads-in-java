@@ -43,14 +43,97 @@ The main method in the Ex2_1 class demonstrates how to use the three methods for
 
  * The NumOfLinesThreadPool class is an inner class that implements the Callable interface and is used in the third method for counting the lines.
 
-### Break down into end to end tests
+### Tests & Results
 
-xxxx
+We have tested the functions with different number of files and different values of "seed" and "bound"  to generate a different random number in each test , 
+    we compared the results of each funtion and compared the time has taken by each funtion to complete its task. You can see and modify the tests in class "Test_Ex2_1" , you can change the values of "seed" and "bound" and the number of files as you want. 
+    
+   * Tests were conducted on an Asus laptop with an Intel Core i5 processor and 8GB of RAM running Windows 10.
+
+  *  The results showed that the thread pool implementation was the fastest, followed by the threads implementation, and the regular implementation was the slowest.    
 
 ```
-yyyy
+Results for testing the functions with number_of_files = 10 , seed = System.currentTimeMillis() to test a different seed each time , and bound = 100 :
+    
+    1. Normal function : 
+       Total number of lines = 433
+       Time for first function = 0.105 seconds
+    
+    2. Thread function : 
+       Total number of lines = 433
+       Time for second function = 0.039 seconds
+    
+    3. ThreadPool function :
+       Total number of lines = 433
+       Time for third function = 0.025 seconds
+    
+    
+Results for testing the functions with number_of_files = 100 , seed = System.currentTimeMillis() to test a different seed each time , and bound = 1000 :
+    
+    1. Normal function : 
+       Total number of lines = 53219
+       Time for first function = 1.594 seconds
+    
+    2. Thread function : 
+       Total number of lines = 53219
+       Time for second function = 0.11 seconds
+    
+    3. ThreadPool function :
+       Total number of lines = 53219
+       Time for third function = 0.082 seconds    
+   
+    
+Results for testing the functions with number_of_files = 1000 , seed = System.currentTimeMillis() to test a different seed each time , and bound = 10000 :
+    
+    1. Normal function : 
+       Total number of lines = 4964953
+       Time for first function = 4.538 seconds
+    
+    2. Thread function : 
+       Total number of lines = 4964953
+       Time for second function = 0.82 seconds
+    
+    3. ThreadPool function :
+       Total number of lines = 4964953
+       Time for third function = 1.195 seconds 
+    
+
+Results for testing the functions with number_of_files = 1000 , seed = System.currentTimeMillis() to test a different seed each time , and bound = 100000 :
+    
+    1. Normal function : 
+       Total number of lines = 50584930
+       Time for first function = 7.5 seconds
+    
+    2. Thread function : 
+       Total number of lines = 50584930
+       Time for second function = 3.463 seconds
+    
+    3. ThreadPool function :
+       Total number of lines = 50584930
+       Time for third function = 1.227 seconds 
+    
+    
+Results for testing the functions with number_of_files = 10000 , seed = System.currentTimeMillis() to test a different seed each time , and bound = 100000 :
+    
+    1. Normal function : 
+       Total number of lines = 502004362
+       Time for first function = 86.497 seconds
+    
+    2. Thread function : 
+       Total number of lines = 502004362
+       Time for second function = 44.212 seconds
+    
+    3. ThreadPool function :
+       Total number of lines = 502004362
+       Time for third function = 16.121 seconds     
+    
 ```
 
+## Conclusion
+    
+
+In conclusion, the results of the tests show that the thread pool implementation is the most efficient approach for calculating the total number of lines in a group of text files. This is because the thread pool creates a fixed number of threads that can be reused for multiple tasks, rather than creating a new thread for each task as in the case of the thread implementation. This results in a reduction of overhead and improved performance. Additionally, the normal implementation, which does not use threads, must complete each task sequentially, leading to slower overall performance compared to the other two approaches.   
+    
 
 ## Built With
 
