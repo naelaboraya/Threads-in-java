@@ -66,8 +66,10 @@ public class Ex2_1 {
     //This function can be used in the normal case and in the threads case (using boolean variable).
     private static int TextFileNumOfLines(String filename,boolean is_Threads_used) {
         if(is_Threads_used){//In case of threads
+            String folder_path = "./OutputFiles";
+            String file_path = folder_path + "/" + filename;
 
-            NumOfLinesThreads thread = new NumOfLinesThreads(filename);
+            NumOfLinesThreads thread = new NumOfLinesThreads(file_path);
 
             thread.start();
 
@@ -133,6 +135,7 @@ public class Ex2_1 {
    static class NumOfLinesThreads extends Thread{
         private String file_name;
         private int num_of_lines;
+        private String path;
 
         public NumOfLinesThreads(String file_name){
             this.file_name = file_name;
@@ -143,11 +146,12 @@ public class Ex2_1 {
             return this.num_of_lines;
         }
 
+
+
         public void run(){
-            String folderPath = "./OutputFiles";
-            String filePath = folderPath + "/" + this.file_name;
+
             try {
-                FileReader fr = new FileReader(filePath);
+                FileReader fr = new FileReader(file_name);
                 BufferedReader br = new BufferedReader(fr);
 
                 while(br.readLine()!=null){
@@ -175,12 +179,37 @@ public class Ex2_1 {
      * @return the to total number of lines in all the given files.
      */
     public static int getNumOfLinesThreads(String[] fileNames){
-        int num_of_total_files_lines = 0;
+        int total_num_of_lines = 0;
 
-        for (String file : fileNames){
-            num_of_total_files_lines += TextFileNumOfLines(file,true);
+        // Create an array of threads, one for each file
+        int length = fileNames.length;
+        NumOfLinesThreads[] threads = new NumOfLinesThreads[length];
+
+        String folder_path = "./OutputFiles";
+        // Start each thread to count the number of lines in its respective file
+        for (int i = 0; i < length; i++) {
+            String file_path = folder_path + "/" + fileNames[i];
+            threads[i] = new NumOfLinesThreads(file_path);
+            threads[i].start();
         }
-        return num_of_total_files_lines;
+
+        // Wait for all threads to finish
+        for (NumOfLinesThreads thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Sum the results of all threads
+
+        for (NumOfLinesThreads thread : threads) {
+            total_num_of_lines += thread.getNum_of_lines();
+        }
+
+        return total_num_of_lines;
+
     }
 
 
