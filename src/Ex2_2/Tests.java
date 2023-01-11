@@ -51,5 +51,38 @@ public class Tests {
         customExecutor.gracefullyTerminate();
     }
 
+    @Test
+    public void secondTest(){
+        CustomExecutor customExecutor = new CustomExecutor();
+
+        for (int i = 0; i < 500; ++i)
+        {
+            Task task1 = Task.createTask(()->{
+                int sum = 0;
+                for (int j = 1; j <= 10; j++) {
+                    sum += j;
+                }
+                return sum;
+            }, TaskType.COMPUTATIONAL);
+
+            Callable<Double> callable1 = ()-> {
+                return 1000 * Math.pow(1.02, 5);
+            };
+            Callable<String> callable2 = ()-> {
+                StringBuilder sb = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+                return sb.reverse().toString();
+            };
+
+            if(i%2 == 0) customExecutor.submit(task1);
+            if(i%5 == 0)customExecutor.submit(callable1, TaskType.OTHER);
+            if(i%3 == 0)customExecutor.submit(callable2, TaskType.IO);
+
+            logger.info(()-> customExecutor.toString());
+        }
+
+        logger.info(()-> customExecutor.toString());
+        customExecutor.gracefullyTerminate();
+
+    }
 
 }
