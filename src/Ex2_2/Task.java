@@ -1,5 +1,4 @@
 package Ex2_2;
-
 import java.util.concurrent.*;
 
 public class Task<T> implements Comparable<Task<T>>, Future<T> {
@@ -75,25 +74,25 @@ public class Task<T> implements Comparable<Task<T>>, Future<T> {
 //        return Integer.compare(type.getPriorityValue(), other.getType().getPriorityValue());
 //    }
 
-public int compare(Task t1, Task t2) {
-    if (t1.getTaskType() == t2.getTaskType()) {
-        return 0;
-    }
-    switch (t1.getTaskType()) {
-        case COMPUTATIONAL:
-            return -1;
-        case IO:
-            if (t2.getTaskType() == TaskType.COMPUTATIONAL) {
-                return 1;
-            } else {
+    public int compare(Task t1, Task t2) {
+        if (t1.getTaskType() == t2.getTaskType()) {
+            return 0;
+        }
+        switch (t1.getTaskType()) {
+            case COMPUTATIONAL:
                 return -1;
-            }
-        case OTHER:
-            return 1;
-        default:
-            throw new IllegalArgumentException("Invalid task type");
+            case IO:
+                if (t2.getTaskType() == TaskType.COMPUTATIONAL) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            case OTHER:
+                return 1;
+            default:
+                throw new IllegalArgumentException("Invalid task type");
+        }
     }
-}
 
     private TaskType getTaskType() {
         return this.type;
@@ -167,4 +166,5 @@ public int compare(Task t1, Task t2) {
         return compare(this,o);
     }
 }
+
 

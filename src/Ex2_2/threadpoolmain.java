@@ -7,37 +7,37 @@ public class threadpoolmain {
 
     public static void main(String[] args) throws InterruptedException {
         CustomExecutor CE = new CustomExecutor();
-   Task<Integer> task = Task.createTask(new Callable<Integer>() {
-        @Override
-        public Integer call() throws Exception {
-            System.out.println("starting COMPUTATIONAL");
-            Thread.sleep(10*1000);
-            System.out.println("ending COMPUTATIONAL");
-            return 5*5;
-        }
-    }, TaskType.COMPUTATIONAL);
+        Task<Integer> task = Task.createTask(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                System.out.println("starting COMPUTATIONAL");
+                Thread.sleep(10*1000);
+                System.out.println("ending COMPUTATIONAL");
+                return 5*5;
+            }
+        }, TaskType.COMPUTATIONAL);
 
 
-    Task<String> task2 = Task.createTask(new Callable<String>() {
-        @Override
-        public String call() throws Exception {
-            System.out.println("starting IO");
-            Thread.sleep(7*1000);
-            System.out.println("ending IO");
-            return "IO";
-        }
-    }, TaskType.IO);
+        Task<String> task2 = Task.createTask(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                System.out.println("starting IO");
+                Thread.sleep(7*1000);
+                System.out.println("ending IO");
+                return "IO";
+            }
+        }, TaskType.IO);
 
-    Task task3 = Task.createTask(new Callable<Object>() {
+        Task task3 = Task.createTask(new Callable<Object>() {
 
-        @Override
-        public Object call() throws Exception {
-            System.out.println("starting OTHER");
-            Thread.sleep(100);
-            System.out.println("ending OTHER");
-            return "OTHER";
-        }
-    }, TaskType.OTHER);
+            @Override
+            public Object call() throws Exception {
+                System.out.println("starting OTHER");
+                Thread.sleep(100);
+                System.out.println("ending OTHER");
+                return "OTHER";
+            }
+        }, TaskType.OTHER);
 
         CE.submit(task2);
         CE.submit(task3);
@@ -76,11 +76,11 @@ public class threadpoolmain {
 //                } catch (ExecutionException e) {
 //                    e.printStackTrace();
 //                }
-            //}
+        //}
 //            System.out.println(task.isDone()+","+task2.isDone()+","+task3.isDone());
 //            Thread.sleep(500);
 
-       // }
+        // }
 //
         try {
             CE.executeAllTasks();
@@ -93,7 +93,7 @@ public class threadpoolmain {
 
 
 
-    //    CE.submit(task3);
+        //    CE.submit(task3);
 //
 //    CE.submit(task);
 //
@@ -142,3 +142,4 @@ public class threadpoolmain {
 //        System.out.println(CE.getQueue());
     }
 }
+

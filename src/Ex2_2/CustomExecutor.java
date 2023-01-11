@@ -28,7 +28,7 @@ public class CustomExecutor {
         return queue;
     }
 
-//    public static <T> Future<T> submit(Task<T> task) {
+    //    public static <T> Future<T> submit(Task<T> task) {
 //        if (task == null) {
 //            throw new NullPointerException("Task is null !");
 //        }
@@ -43,32 +43,32 @@ public class CustomExecutor {
 //        return task;
 //    }
     public <T> Future<T> submit(Task<T> taskk) {
-    queue.add(taskk);
+        queue.add(taskk);
 
-    Future<T> f =  new Future<T>() {
-        @Override
-        public boolean cancel(boolean mayInterruptIfRunning) {
-            return taskk.cancel(true);
-        }
-        @Override
-        public boolean isCancelled() {
-            return taskk.isCancelled();
-        }
-        @Override
-        public boolean isDone() {
-            return taskk.isDone();
+        Future<T> f =  new Future<T>() {
+            @Override
+            public boolean cancel(boolean mayInterruptIfRunning) {
+                return taskk.cancel(true);
+            }
+            @Override
+            public boolean isCancelled() {
+                return taskk.isCancelled();
+            }
+            @Override
+            public boolean isDone() {
+                return taskk.isDone();
 
-        }
-        @Override
-        public T get() throws InterruptedException, ExecutionException {
-            return taskk.get();
-        }
-        @Override
-        public T get(long timeout, TimeUnit unit)
-                throws InterruptedException, ExecutionException, TimeoutException {
-            return taskk.get(timeout, unit);
-        }
-    };
+            }
+            @Override
+            public T get() throws InterruptedException, ExecutionException {
+                return taskk.get();
+            }
+            @Override
+            public T get(long timeout, TimeUnit unit)
+                    throws InterruptedException, ExecutionException, TimeoutException {
+                return taskk.get(timeout, unit);
+            }
+        };
 //        try {
 //            f.get();
 //        } catch (InterruptedException e) {
@@ -77,7 +77,7 @@ public class CustomExecutor {
 //            e.printStackTrace();
 //        }
         return f;
-}
+    }
 
 
     public <T> Future<T> submit(Callable<T> callable, TaskType type) {
