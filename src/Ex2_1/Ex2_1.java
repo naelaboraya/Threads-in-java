@@ -1,3 +1,5 @@
+package Ex2_1;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -247,7 +249,7 @@ public class Ex2_1 {
 
         // Create a thread pool with a fixed size equal to the number of files
         ExecutorService executor = Executors.newFixedThreadPool(fileNames.length);
-
+        System.out.println("number of threads in ThreadPool : "+fileNames.length);
         // Create a list of Callable tasks to count the number of lines in each file
         List<Callable<Integer>> tasks = new ArrayList<>();
         for (String fileName : fileNames) {
