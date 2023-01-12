@@ -1,94 +1,85 @@
 package Ex2_2;
 
+import java.util.HashMap;
 import java.util.concurrent.*;
-
 /**
- The CustomExecutor class is a custom implementation of the ThreadPoolExecutor with the added feature of managing task priorities.
- Tasks are added to a PriorityBlockingQueue and executed according to their priority value.
- @author Nael Aboraya , Marwan Hresh
+
+ CustomExecutor class is a custom implementation of the ThreadPoolExecutor.
+ It provides a fixed number of threads and uses a PriorityBlockingQueue to hold the tasks.
+ The tasks are also stored in a HashMap where the key is the task's priority and the value is the task itself.
+ <p>The thread pool is initialized with a minimum pool size of {@code MinPoolSize} (which is the number of the cores in the computer divided by 2),
+ a maximum pool size of {@code MaxPoolSize} (which is the number of the cores in the computer minus 1),
+ a keep-alive time of {@code keepAlive} and a time unit of {@code unit}.
+ <p>This class also provides methods for getting the tasks, setting max priority and submitting tasks to the queue.
+ <p>The class also overrides the newTaskFor method, in order to provide a custom RunnableFuture implementation, which allows the task
+ to be prioritized based on its natural ordering or a comparator provided at construction time.
+ <p>The class also provides a submit method which adds the submitted task to the HashMap and updates the max priority if necessary.
  @version 1.0
+ @author Nael Aboraya , Marwan Hresh
  */
-public class CustomExecutor {
-    private final int corePoolSize;
-    private final int maximumPoolSize;
-    private final long keepAliveTime;
-    private final TimeUnit unit;
-    private static PriorityBlockingQueue<Task<?>> queue;//priority queue that will be used in the executor , holds the tasks.
-    private static ThreadPoolExecutor executor;
+public class CustomExecutor extends ThreadPoolExecutor {
+
+    private HashMap <Integer, Task> tasks;//A hashMap that stores the tasks (key is the task's priority's integer value and the value is the task itself).
+    private static final int numCores = Runtime.getRuntime().availableProcessors();//number of cores in computer.
+    //Min and Max pool size
+    private static final int MinPoolSize = numCores / 2;
+    private static final int MaxPoolSize = numCores - 1;
+    private static final TimeUnit unit = TimeUnit.MILLISECONDS;
+    private static final long keepAlive = 300;
+    private int MaxPriority;//The highest priority in the pool's queue.
 
 
     /**
-     Constructor for the CustomExecutor class , gives the priority queue to the constructor of ThreadPoolExecutor.
-     <p>
-     Default values are:
-     corePoolSize = number of processors / 2
-     <p>
-     maximumPoolSize = number of processors - 1
-     <p>
-     keepAliveTime = 300ms
-     <p>
-     unit = TimeUnit.MILLISECONDS
+     * Creates a new thread pool with a fixed number of threads.
+     * <p>The thread pool is initialized with a minimum pool size of {@code MinPoolSize} (which is the number of the
+     * cores in the computer divided by 2), a maximum pool size of {@code MaxPoolSize} (which is the number of the
+     * cores in the computer minus 1), a keep-alive time of {@code keepAlive} and a time unit of {@code unit}.
+     * <p>The internal task queue is implemented as a {@link PriorityBlockingQueue},
+     * which allows tasks to be prioritized based on their natural ordering or a comparator provided at
+     * construction time.
+     * <p>A {@link HashMap} is also created to store the tasks and their priorities.
+     * <p>The default maximum priority is set to 1.
      */
     public CustomExecutor() {
-        int numProcessors = Runtime.getRuntime().availableProcessors();
-        this.corePoolSize = numProcessors / 2;
-        this.maximumPoolSize = numProcessors - 1;
-        this.keepAliveTime = 300;
-        this.unit = TimeUnit.MILLISECONDS;
-        this.queue = new PriorityBlockingQueue<>();
-        this.executor = new ThreadPoolExecutor(
-                corePoolSize, maximumPoolSize, keepAliveTime, unit, (PriorityBlockingQueue)queue);
+        super(MinPoolSize, MaxPoolSize, keepAlive, unit, new PriorityBlockingQueue<>());
+        this.tasks = new HashMap <> ();
+        this.MaxPriority = 1;//default max priority is 1.
     }
 
+
+
+
     /**
-     * @return the priority queue of this executor.
+     * Sets the current max priority to be 'setMax'
+     * @param setMax
      */
-    public PriorityBlockingQueue<Task<?>> getQueue() {
-        return queue;
+    public void setMaxPriority(int setMax) {
+        if (setMax >= 1 && setMax <= 10)//checking if the priority's value is valid
+            this.MaxPriority = setMax;
     }
+
+
 
     /**
      Submits a new task to the queue.
+     <p>Adds the submitted task to the hashmap.
+     <p>Checks and updates the max priority.
      @param <T> the type of the result returned by the callable task
-     @param taskk the task to submit
+     @param task the task to submit
      @return a Future of the task
      */
-    public <T> Future<T> submit(Task<T> taskk) {
-        queue.add(taskk);
-
-        Future<T> f =  new Future<T>() {
-            @Override
-            public boolean cancel(boolean mayInterruptIfRunning) {
-                return taskk.cancel(true);
-            }
-            @Override
-            public boolean isCancelled() {
-                return taskk.isCancelled();
-            }
-            @Override
-            public boolean isDone() {
-                return taskk.isDone();
-
-            }
-            @Override
-            public T get() throws InterruptedException, ExecutionException {
-                return taskk.get();
-            }
-            @Override
-            public T get(long timeout, TimeUnit unit)
-                    throws InterruptedException, ExecutionException, TimeoutException {
-                return taskk.get(timeout, unit);
-            }
-        };
-//        try {
-//            f.get();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
-        return f;
+    public synchronized <T> Future <T> submit(Task <T> task) {
+        try {
+            this.tasks.put(task.getPriority(), task);
+            if (task.getPriority() >= this.MaxPriority)
+                this.setMaxPriority(task.getPriority());
+            return super.submit(task.getCallable());
+        }
+        catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getCause());
+        }
     }
+
 
     /**
      Submits a new task with the specified task type to the queue.
@@ -97,8 +88,8 @@ public class CustomExecutor {
      @param type the task type
      @return a Future of the task
      */
-    public <T> Future<T> submit(Callable<T> callable, TaskType type) {
-        return submit(Task.of(type, callable));
+    public synchronized <T> Future <T> submit(Callable <T> callable, TaskType type) {
+        return this.submit(Task.createTask (callable, type));
     }
 
     /**
@@ -107,56 +98,54 @@ public class CustomExecutor {
      @param callable the task to submit
      @return a Future of the task
      */
-    public <T> Future<T> submit(Callable<T> callable) {
-        return submit(Task.of(callable));
+    public synchronized <T> Future <T> submit(Callable <T> callable) {
+        return this.submit(Task.of(callable));
     }
 
 
     /**
-     * Executes all the tasks in the queue.
-     * <p>Checks if the queue is empty , if it's not takes the first task in the queue (with the highest priority) ,
-     * and executes it.
-     * @throws InterruptedException
-     * @throws ExecutionException
+     Creates a new {@link RunnableFuture} for the given {@link Callable}.
+     <p>This method is protected and intended to be overridden by subclasses in order to provide a custom
+     {@link RunnableFuture} implementation. The returned {@link RunnableFuture} is wrapped in a
+     {@link ComparableTask} class, which allows the task to be prioritized based on its
+     natural ordering or a comparator provided at construction time.
+     @param <T> the type of the task's result
+     @param task the {@link Callable} to be wrapped
+     @return a new {@link RunnableFuture} wrapping the given task
      */
-    public void executeAllTasks() throws InterruptedException, ExecutionException {
-        while (!queue.isEmpty()) {
-            Task<?> task = queue.poll();
-            task.execute();
-            System.out.println(task.get());
-        }
+    protected <T> RunnableFuture <T> newTaskFor(Callable <T> task) {
+        return new ComparableTask <> (task);
     }
-
-    /**
-     * Terminates the executor.
-     */
-    public void gracefullyTerminate() {
-        //executor.shutdown();
-        try {
-            if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
-                executor.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            executor.shutdownNow();
-        }
-    }
-
 
     /**
      *
      * @return the maximum priority of the tasks in the queue.
      */
-    public int getCurrentMax(){
-        return queue.poll().getPriority();
+    public synchronized int getCurrentMax() {
+        return this.MaxPriority;
     }
 
+
+    /**
+     * Terminates the executor.
+     */
+    public synchronized void gracefullyTerminate() {
+        super.shutdown();
+    }
+
+    /**
+     * @return the map that contains the tasks.
+     */
+    public HashMap <Integer, Task> getTasks() {
+        return this.tasks;
+    }
 
     //toString , describes this executor
     @Override
     public String toString() {
-        return  "PriorityQueue: " + this.getQueue().toString() + "\n"+
-                "Max priority = " + getCurrentMax();
+        return "Submitted tasks : {" +
+                "tasks=" + tasks +
+                ", MaxPriority=" + MaxPriority +
+                '}';
     }
-
-
 }

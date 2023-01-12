@@ -2,8 +2,18 @@ package Ex2_2;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+/**
+ * This class is only for testing .
+ * <P>The first function is given to us in the assignment and it's a partial test.
+ */
 public class Tests {
     public static final Logger logger = LoggerFactory.getLogger(Tests.class);
     @Test
@@ -52,36 +62,44 @@ public class Tests {
     }
 
     @Test
-    public void secondTest(){
+    public void secondTest()  {
         CustomExecutor customExecutor = new CustomExecutor();
 
-        for (int i = 0; i < 500; ++i)
-        {
-            Task task1 = Task.createTask(()->{
-                int sum = 0;
-                for (int j = 1; j <= 10; j++) {
-                    sum += j;
-                }
-                return sum;
-            }, TaskType.COMPUTATIONAL);
+        Task<Integer> compTask = Task.createTask(() -> 10, TaskType.COMPUTATIONAL);
+        Task<String> ioTask = Task.createTask(() -> "IO", TaskType.IO);
+        Task<String> OtherTask =  Task.createTask(() -> "OTHER", TaskType.OTHER);
 
-            Callable<Double> callable1 = ()-> {
-                return 1000 * Math.pow(1.02, 5);
-            };
-            Callable<String> callable2 = ()-> {
-                StringBuilder sb = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-                return sb.reverse().toString();
-            };
+        ArrayList<Task> tasks = new ArrayList<>();
+        tasks.add(compTask);
+        tasks.add(ioTask);
+        tasks.add(OtherTask);
 
-            if(i%2 == 0) customExecutor.submit(task1);
-            if(i%5 == 0)customExecutor.submit(callable1, TaskType.OTHER);
-            if(i%3 == 0)customExecutor.submit(callable2, TaskType.IO);
 
-            logger.info(()-> customExecutor.toString());
+        List<Future<Task>> futures = null;
+        try {
+            futures = customExecutor.invokeAll((Collection)tasks);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        logger.info(()-> customExecutor.toString());
-        customExecutor.gracefullyTerminate();
+        String testAns = "";
+
+        for (Future f : futures) {
+            try {
+
+                testAns += f.get()+" ";;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String finalTestAns = testAns;
+        logger.info(()-> "the values are :  " + finalTestAns);
+
+        assertEquals(finalTestAns,10+" "+"IO"+" "+"OTHER ");
+
 
     }
 
