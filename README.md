@@ -140,9 +140,42 @@ In conclusion, the results of the tests show that the thread pool implementation
     that means that   task with a higher priority executed first.
 
 ## Code structure
-
-
+    
+ * The "Task" class - represents a task with callable operation and a type , it implements "Callable" interface. 
+    It has a private constructor, so it can not be initialized using the keyword "new", a task can be constructed 
+    using one of its factory methods. 
+    * There are three methods that do this work by calling the private constructor :  
+       1. "of" - takes a Callable and creates a new task from it, sets the type to be "OTHER" as default.
+       2. "of" - takes a TaskType and a Callable , creates a task from this Callable and sets the task's type to be as the given TaskType.
+       3. "createTask" - does the same work as the previous function , takes a Callable and a TaskType as input , creates a task from this Callable and sets the task's type to be as the given TaskType.
+    
+ * The "ComparableTask" class - a custom implementation of the FutureTask class that implements the Comparable interface. 
+    It provides a way to compare tasks based on their priorities. 
+    The ComparableTask class is used as an adapter, it adapts the FutureTask class to make it comparable based on the priorities of the tasks. The main purpose of this class is to allow tasks to be prioritized in a queue,
+ so that the tasks with higher priorities are executed first.
+    * Methods and properties of class ComparableTask : 
+      1. It provides a constructor that takes a Callable task and creates a FutureTask and a Task object from it. 
+      2. It also provides a getTask method that returns the Task object.
+      3. The compareTo method compares the priorities of two tasks and returns a negative integer, zero, or a positive integer as this task is less than,
+ equal to, or greater than the specified task.
+    
+ * The "CustomExecutor" class - a custom implementation of the ThreadPoolExecutor.
+    It provides a fixed number of threads and uses a PriorityBlockingQueue to hold the tasks.
+    The tasks are also stored in a HashMap where the key is the task's priority and the value is the task itself.
+    The thread pool is initialized with a minimum pool size of {@code MinPoolSize} (which is the number of the cores in the computer divided by 2),
+ a maximum pool size of {@code MaxPoolSize} (which is the number of the cores in the computer minus 1),
+ a keep-alive time of 300 ms.
+    * Methods and properties of class CustomExecutor : 
+      1. This class provides methods for getting the tasks, setting max priority and submitting tasks to the queue.
+      2. The class also overrides the "newTaskFor" method, in order to provide a custom RunnableFuture implementation, which allows the task
+ to be prioritized based on its natural ordering or a comparator provided at construction time.
+      3. The class provides a "submit" method which adds the submitted task to the HashMap and updates the max priority if necessary.
+      4. The class has a function "gracefullyTerminate" that shuts down the executor.
+    
 ## Prerequisites
+    
+     
+    
 
 To run the code in this project, you will need :
 
