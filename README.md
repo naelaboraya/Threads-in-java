@@ -36,17 +36,17 @@ The main method in the Ex2_1 class demonstrates how to use the three methods for
 
 ## UML Diagram for part I
 
-![UML_Ex2_1](https://user-images.githubusercontent.com/94143804/210369991-1ba8c858-9d73-418b-9b67-c15d0e44f784.png)
+![Part 1](https://user-images.githubusercontent.com/94143804/212314200-de10d8e4-d569-4b08-b24c-50f785a3d3e5.png)
 
 
 ### Tests & Results
 
 We have tested the functions with different number of files and different values of "seed" and "bound"  to generate a different random number in each test , 
-    we compared the results of each funtion and compared the time has taken by each funtion to complete its task. You can see and modify the tests in class "Test_Ex2_1" , you can change the values of "seed" and "bound" and the number of files as you want. 
+    we compared the results of each funtion and compared the time has taken by each funtion to complete its task. You can see and modify the tests in class "Test_Ex2_1" , you can change the values of "seed" and "bound" and the number of files as you want , We recommend that you test each function alone (dont test all the functions together , to gain more accurate results. 
     
    * Tests were conducted on an Asus laptop with an Intel Core i5 processor and 8GB of RAM running Windows 10.
 
-  *  The results showed that the thread pool implementation was the fastest, followed by the threads implementation, and the regular implementation was the slowest.    
+  *  The results showed that the threads approach was the fastest, followed by the ThreadPool implementation, and the regular implementation was the slowest.    
 
 ```
 Results for testing the functions with number_of_files = 10 , seed = System.currentTimeMillis() to test a different seed each time , and bound = 100 :
@@ -110,6 +110,7 @@ Results for testing the functions with number_of_files = 10000 , seed = 10 , and
        Total number of lines = 501295148
        Time for third function = 20.377 seconds    
 
+We also have performed more tests with a larger amount of files and the results indicated that the Threads approach is faster.
 
 *For screenshots of the results please visit our wiki!
 ```
@@ -118,7 +119,11 @@ Results for testing the functions with number_of_files = 10000 , seed = 10 , and
 ## Conclusion
     
 
-In conclusion, the results of the tests show that the thread pool implementation is the most efficient approach for calculating the total number of lines in a group of text files. This is because the thread pool creates a fixed number of threads that can be reused for multiple tasks, rather than creating a new thread for each task as in the case of the thread implementation. This results in a reduction of overhead and improved performance. Additionally, the normal implementation, which does not use threads, must complete each task sequentially, leading to slower overall performance compared to the other two approaches.   
+In conclusion, the results of the tests show that the threads implementation is the most efficient approach (in terms of time) for calculating the total number of lines in a group of text files.
+In general ThreadPool is the fastest way, this is because the thread pool creates a fixed number of threads that can be reused for multiple tasks, rather than creating a new thread for each task , but it depends on many aspects , it depends on the case the threads were used and depends on the computer itself.
+In our case we created an array of threads and started them all together , maybe it's the reason why Threads approach is the fastest , however it is the also the heaviest approach of the three aproaches due to the overhread it adds to the program.
+Also , the thread pool has a maximum number of threads, so a large number of blocked thread pool threads might prevent tasks from starting.
+Additionally, the normal implementation, which does not use threads, must complete each task sequentially, leading to slower overall performance compared to the other two approaches.
     
 # Part II
 ### In this part we have implemented a ThreadPool executor that deals with tasks that have a priority , it holds a priority queue for that , and executes the tasks according to the their priorities. 
