@@ -207,6 +207,6 @@ If you have any suggestions or comments, feel free to create a pull request or o
 ## Authors
 
 *  [Nael Aboraya](https://github.com/naelaboraya)
-*  [Marwan Hresh](https://github.com/naelaboraya)
+*  [Marwan Hresh](https://github.com/marwanhresh)
 
 
