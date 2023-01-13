@@ -18,14 +18,12 @@ public class Test_Ex2_1 {
      * the difference between the end time and the start time.
      */
     public static void main(String[] args)  {
-        int number_of_files = 1000;//number of files to generate
-        int seed = 12;//seed
-        int bound = 1000;//max number of lines
-//          String[] file_names = Ex2_1.Ex2_1.createTextFiles(number_of_files,seed,bound);//generating the files
-//          String  File_names = Arrays.toString(get_files_names());
-//        System.out.println(File_names);//printing the names of files (output of function 1)
-//        System.out.println("-----------------------------------------------------------");
-
+        int number_of_files = 100000;//number of files to generate
+        int seed = 10;//seed
+        int bound = 100000;//max number of lines
+        
+        Ex2_1.createTextFiles(number_of_files, seed, bound);//creating files
+        
 
 
 
@@ -38,8 +36,6 @@ public class Test_Ex2_1 {
                 System.out.println("Time for first function = "+(double)(end_function_1 - start_function_1)/1000.0+" seconds");
                 System.out.println("-----------------------------------------------------------");
 
-
-
                 System.out.println("Second function (Threads) :");
                 //calculating the time for function 2
                 long start_function_2 = System.currentTimeMillis();
@@ -49,10 +45,7 @@ public class Test_Ex2_1 {
                 System.out.println("Time for second function = "+(double)(end_function_2 - start_function_2)/1000.0+" seconds");
                 System.out.println("-----------------------------------------------------------");
 
-
-
-
-
+                
                 System.out.println("Third function (ThreadPool) :");
                 //calculating the time for function 3
                 long start_function_3 = System.currentTimeMillis();
@@ -77,8 +70,8 @@ public class Test_Ex2_1 {
         File folder = new File("./OutputFiles");
         File[] listOfFiles = folder.listFiles();
         int length = listOfFiles.length;
-        String[] ans = new String[100];
-        for (int i = 0; i < 100; i++) {
+        String[] ans = new String[length];
+        for (int i = 0; i < length; i++) {
 
                 ans[i]=listOfFiles[i].getName();
 
@@ -87,4 +80,6 @@ public class Test_Ex2_1 {
         return ans;
     }
 }
+
+
 
