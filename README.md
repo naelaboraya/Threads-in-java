@@ -49,7 +49,7 @@ We have tested the functions with different number of files and different values
   *  The results showed that the thread pool implementation was the fastest, followed by the threads implementation, and the regular implementation was the slowest.    
 
 ```
-Results for testing the functions with number_of_files = 10 , seed = System.currentTimeMillis() to Ex2_1.test a different seed each time , and bound = 100 :
+Results for testing the functions with number_of_files = 10 , seed = System.currentTimeMillis() to test a different seed each time , and bound = 100 :
     
     1. Normal function : 
        Total number of lines = 433
@@ -64,49 +64,36 @@ Results for testing the functions with number_of_files = 10 , seed = System.curr
        Time for third function = 0.025 seconds
     
     
-Results for testing the functions with number_of_files = 100 , seed = System.currentTimeMillis() to Ex2_1.test a different seed each time , and bound = 1000 :
+Results for testing the functions with number_of_files = 100 , seed = 1 , and bound = 100000 :
     
     1. Normal function : 
-       Total number of lines = 53219
-       Time for first function = 1.594 seconds
+       Total number of lines = 5686229
+       Time for first function = 0.5783178 seconds
     
     2. Thread function : 
-       Total number of lines = 53219
-       Time for second function = 0.11 seconds
+       Total number of lines = 5686229
+       Time for second function = 0.1834518 seconds
     
     3. ThreadPool function :
-       Total number of lines = 53219
-       Time for third function = 0.082 seconds    
+       Total number of lines = 5686229
+       Time for third function = 0.162134 seconds    
    
-    
-Results for testing the functions with number_of_files = 1000 , seed = System.currentTimeMillis() to Ex2_1.test a different seed each time , and bound = 10000 :
-    
-    1. Normal function : 
-       Total number of lines = 4964953
-       Time for first function = 4.538 seconds
-    
-    2. Thread function : 
-       Total number of lines = 4964953
-       Time for second function = 0.82 seconds
-    
-    3. ThreadPool function :
-       Total number of lines = 4964953
-       Time for third function = 1.195 seconds 
+     
     
 
-Results for testing the functions with number_of_files = 1000 , seed = System.currentTimeMillis() to Ex2_1.test a different seed each time , and bound = 100000 :
+Results for testing the functions with number_of_files = 1000 , seed = 12 , and bound = 100000 :
     
     1. Normal function : 
-       Total number of lines = 50584930
-       Time for first function = 7.5 seconds
+       Total number of lines = 50782123
+       Time for first function = 4.186 seconds
     
     2. Thread function : 
-       Total number of lines = 50584930
-       Time for second function = 3.463 seconds
+       Total number of lines = 50782123
+       Time for second function = 1.687 seconds
     
     3. ThreadPool function :
-       Total number of lines = 50584930
-       Time for third function = 1.227 seconds 
+       Total number of lines = 50782123
+       Time for third function = 1.847 seconds 
     
     
 Results for testing the functions with number_of_files = 10000 , seed = System.currentTimeMillis() to Ex2_1.test a different seed each time , and bound = 100000 :
@@ -122,8 +109,11 @@ Results for testing the functions with number_of_files = 10000 , seed = System.c
     3. ThreadPool function :
        Total number of lines = 502004362
        Time for third function = 16.121 seconds     
-    
+
+
+*For screenshots of the results please visit our wiki!
 ```
+
 
 ## Conclusion
     
