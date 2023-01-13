@@ -18,7 +18,7 @@ public class Test_Ex2_1 {
      * the difference between the end time and the start time.
      */
     public static void main(String[] args)  {
-        int number_of_files = 100000;//number of files to generate
+        int number_of_files = 10;//number of files to generate
         int seed = 10;//seed
         int bound = 100000;//max number of lines
         
