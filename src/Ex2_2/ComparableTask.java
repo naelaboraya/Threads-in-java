@@ -21,21 +21,29 @@ public class ComparableTask<T> extends FutureTask <T> implements Comparable <Com
 
     private Task <T> task;
 
-    public ComparableTask(Callable <T> task) {
-        super(task);
-        this.task =  Task.of(task);
+    /**
+     * Constructs the ComparableTask.
+     * The constructor calls the FutureTask constructor and gives it the given callable.
+     * It creates a task of the given callable.
+     * @param callable
+     */
+    public ComparableTask(Callable <T> callable) {
+        super(callable);
+        this.task =  Task.of(callable);
     }
 
+    //getter
     public Task <T> getTask() {
         return this.task;
     }
 
+    //compareTo , uses Integer.compare to compare between two tasks.
     @Override
-    public int compareTo(ComparableTask<T> otherTask) {
-        int ans = 0;
-        if (this.getTask().getType() != null && otherTask.getTask().getType() != null)
-            ans = Integer.compare(this.getTask().getPriority(), otherTask.getTask().getPriority());
+    public int compareTo(ComparableTask<T> o) {
+        int comp = 0;
+        if (this.getTask().getType() != null && o.getTask().getType() != null)
+            comp = Integer.compare(this.getTask().getPriority(), o.getTask().getPriority());
 
-        return ans;
+        return comp;
     }
 }
