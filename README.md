@@ -96,19 +96,19 @@ Results for testing the functions with number_of_files = 1000 , seed = 12 , and 
        Time for third function = 1.847 seconds 
     
     
-Results for testing the functions with number_of_files = 10000 , seed = System.currentTimeMillis() to Ex2_1.test a different seed each time , and bound = 100000 :
+Results for testing the functions with number_of_files = 10000 , seed = 10 , and bound = 100000 :
     
     1. Normal function : 
-       Total number of lines = 502004362
-       Time for first function = 86.497 seconds
+       Total number of lines = 501295148
+       Time for first function = 49.188 seconds
     
     2. Thread function : 
-       Total number of lines = 502004362
-       Time for second function = 44.212 seconds
+       Total number of lines = 501295148
+       Time for second function = 16.143 seconds
     
     3. ThreadPool function :
-       Total number of lines = 502004362
-       Time for third function = 16.121 seconds     
+       Total number of lines = 501295148
+       Time for third function = 20.377 seconds    
 
 
 *For screenshots of the results please visit our wiki!
