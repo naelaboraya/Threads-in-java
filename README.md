@@ -159,8 +159,8 @@ Additionally, the normal implementation, which does not use threads, must comple
  * The "CustomExecutor" class - a custom implementation of the ThreadPoolExecutor.
     It provides a fixed number of threads and uses a PriorityBlockingQueue to hold the tasks.
     The tasks are also stored in a HashMap where the key is the task's priority and the value is the task itself.
-    The thread pool is initialized with a minimum pool size of {@code MinPoolSize} (which is the number of the cores in the computer divided by 2),
- a maximum pool size of {@code MaxPoolSize} (which is the number of the cores in the computer minus 1),
+    The thread pool is initialized with a minimum pool size of  MinPoolSize (which is the number of the cores in the computer divided by 2),
+ a maximum pool size of  MaxPoolSize (which is the number of the cores in the computer minus 1),
  a keep-alive time of 300 ms.
     * Methods and properties of class CustomExecutor : 
       1. This class provides methods for getting the tasks, setting max priority and submitting tasks to the queue.
@@ -193,7 +193,7 @@ You can also import the package into your project and use the classes to priorit
 ## Built With
 
 * [Intellij IDEA](https://www.jetbrains.com/idea/download/#section=windows) - The Java integrated development environment used for coding and building the project.
-
+* [Eclipse IDE](https://www.eclipse.org/ide/) - Integrated development environment used in computer programming.
 ## Contributing
 
 If you have any suggestions or comments, feel free to create a pull request or open an issue. Your contributions are always welcome!
