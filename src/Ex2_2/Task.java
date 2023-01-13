@@ -36,13 +36,6 @@ public class Task<T> implements Callable<T> {
         this.latch = new CountDownLatch(1);
     }
 
-    /**
-     * Gets this task callable.
-     * @return
-     */
-    public Callable getCallable (){
-        return this.callable;
-    }
 
     /**
      Create a new task from a callable , sets the priority as default (OTHER).
@@ -75,6 +68,14 @@ public class Task<T> implements Callable<T> {
      */
     public static <T> Task<T> createTask(Callable<T> callable, TaskType type) {
         return new Task<>(type, callable);
+    }
+
+    /**
+     * Gets this task callable.
+     * @return
+     */
+    public Callable getCallable (){
+        return this.callable;
     }
 
     /**

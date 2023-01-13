@@ -14,6 +14,8 @@ import java.util.concurrent.FutureTask;
  <p>The ComparableTask class is used as an adapter.
  It adapts the FutureTask class to make it comparable based on the priorities of the tasks. The main purpose of this class is to allow tasks to be prioritized in a queue,
  so that the tasks with higher priorities are executed first.
+ @author Nael Aboraya , Marwan Hresh
+ @version 1.0
  */
 public class ComparableTask<T> extends FutureTask <T> implements Comparable <ComparableTask<T>> {
 
