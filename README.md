@@ -185,8 +185,12 @@ To run the code in this project, you will need :
 
 
 ## Usage
-
-To use the code, you can either import the project into your IDE and run the main method in the Ex2_1.Test_Ex2_1 class, or you can compile and run the code using the javac and java command-line tools.
+You can use the project by either importing it into your IDE or by compiling and running the code using the javac and java command-line tools.
+  
+To use part 1, run the main method in the "Test_Ex2_1" in package "Ex2_1" , You can modify the values as you want , an "OutpuFiles" folder will be genarated
+with the files in it.
+There is also a Junit test class "test" that you can run and check each function's result and time.
+  
 To use part 2 , you can see the test class "Tests" in package "Ex2_2" , you can modify the tasks as you want and do your own tests. 
 You can also import the package into your project and use the classes to prioritize and execute your own tasks.
      
