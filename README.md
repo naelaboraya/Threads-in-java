@@ -1,8 +1,10 @@
 # <strong>Threads in java</strong>
+![threads5](https://user-images.githubusercontent.com/94143804/212205758-d9708725-68bb-4fe9-98dd-f8fcd7c62291.jpg)
 
-This project is a collection of Java classes and functions that demonstrate how to use threads to perform tasks concurrently and efficiently. 
-<p>The project includes examples of using threads to count the number of lines in text files and using a thread pool to perform the same task.
-<p>It also includes an implementation of ThreadPoolExecutor with priorities for the tasks that it takes.
+
+ This project is a collection of Java classes and functions that demonstrate how to use threads to perform tasks concurrently and efficiently. 
+ <p>The project includes examples of using threads to count the number of lines in text files and using a thread pool to perform the same task.
+ <p>It also includes an implementation of ThreadPoolExecutor with priorities for the tasks that it takes.
 
 
 
@@ -171,11 +173,13 @@ In conclusion, the results of the tests show that the thread pool implementation
  to be prioritized based on its natural ordering or a comparator provided at construction time.
       3. The class provides a "submit" method which adds the submitted task to the HashMap and updates the max priority if necessary.
       4. The class has a function "gracefullyTerminate" that shuts down the executor.
-    
-## Prerequisites
-    
      
+## UML Diagram for part II
+     
+![Package Ex2_2 (1)](https://user-images.githubusercontent.com/94143804/212206548-1a8ad370-7260-4093-b2b5-1414635d2c89.png)
+
     
+## Prerequisites 
 
 To run the code in this project, you will need :
 
@@ -188,7 +192,9 @@ To run the code in this project, you will need :
 ## Usage
 
 To use the code, you can either import the project into your IDE and run the main method in the Ex2_1.Test_Ex2_1 class, or you can compile and run the code using the javac and java command-line tools.
-
+To use part 2 , you can see the test class "Tests" in package "Ex2_2" , you can modify the tasks as you want and do your own tests. 
+You can also import the package into your project and use the classes to prioritize and execute your own tasks.
+     
 ## Built With
 
 * [Intellij IDEA](https://www.jetbrains.com/idea/download/#section=windows) - The Java integrated development environment used for coding and building the project.
@@ -201,6 +207,6 @@ If you have any suggestions or comments, feel free to create a pull request or o
 ## Authors
 
 *  [Nael Aboraya](https://github.com/naelaboraya)
-
+*  [Marwan Hresh](https://github.com/naelaboraya)
 
 
